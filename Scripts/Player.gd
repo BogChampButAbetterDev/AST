@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const SPEED = 5.0
+var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 const MOUSE_SENSITIVITY = .005
@@ -29,7 +29,7 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
+	
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	
@@ -38,11 +38,15 @@ func _physics_process(delta):
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
 	
 	if direction:
-		print(direction)
 		velocity.x = -direction.x * SPEED
 		velocity.z = -direction.z * SPEED
 		
 		body.rotation.y = lerp_angle(body.rotation.y, atan2(velocity.x, velocity.z), LERP_VAL)
+		if Input.is_action_pressed("sprint"):
+			SPEED = 10.0
+		else:
+			SPEED = 5.0
+		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
