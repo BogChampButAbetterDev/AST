@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bopgh5r2ukh5q"]
+[gd_scene load_steps=7 format=3 uid="uid://bopgh5r2ukh5q"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_jsx6u"]
+[ext_resource type="PackedScene" uid="uid://bdwyhl8qkconc" path="res://Scenes/Sword.tscn" id="2_o1xol"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_c2jvu"]
 
@@ -11,7 +12,7 @@ albedo_color = Color(1, 0.443137, 0.521569, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjen7"]
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_jsx6u")
 
 [node name="body" type="MeshInstance3D" parent="."]
@@ -21,6 +22,9 @@ mesh = SubResource("CapsuleMesh_c2jvu")
 transform = Transform3D(-0.0341669, 0, -0.259561, 0, 0.195918, 0, 0.999416, 0, -0.00887355, -0.00961313, 0.218801, 0.567308)
 mesh = SubResource("BoxMesh_juok2")
 surface_material_override/0 = SubResource("StandardMaterial3D_nrj5k")
+
+[node name="Sword" parent="body" instance=ExtResource("2_o1xol")]
+transform = Transform3D(0.0343648, 0.00228142, 0.729744, -0.0395565, 0.729484, -0.000417821, -0.728674, -0.0394928, 0.034438, 0.400594, 0, 0.449102)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fjen7")
@@ -33,7 +37,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529622, 0)
 spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="Spring Arm Pivot/SpringArm3D"]
-
-[node name="sprint_timer" type="Timer" parent="."]
-
-[connection signal="timeout" from="sprint_timer" to="." method="_on_sprint_timer_timeout"]

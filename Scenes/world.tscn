@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://wr75r0en33tf"]
+[gd_scene load_steps=9 format=3 uid="uid://wr75r0en33tf"]
 
 [ext_resource type="Texture2D" uid="uid://c3scemxyjn4al" path="res://Textures/texture_07.png" id="1_15eoo"]
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="1_iqlxy"]
+[ext_resource type="PackedScene" uid="uid://ct1krnn3le2we" path="res://Scenes/Actor Scenes/Enemy.tscn" id="3_ot0sp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4no8p"]
 albedo_texture = ExtResource("1_15eoo")
@@ -41,3 +42,6 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_iqlxy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.37318, 0)
+
+[node name="Enemy" parent="." instance=ExtResource("3_ot0sp")]
+transform = Transform3D(-0.995302, 0, 0.0968186, 0, 1, 0, -0.0968186, 0, -0.995302, 0, 1.01601, 17.3581)

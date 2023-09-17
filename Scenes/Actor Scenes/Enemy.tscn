@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://ct1krnn3le2we"]
+
+[ext_resource type="Script" path="res://Scenes/Actor Scenes/Enemy.gd" id="1_vahkp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o3a6j"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5byip"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ixf0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wh25n"]
+
+[node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
+script = ExtResource("1_vahkp")
+
+[node name="body" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="body"]
+mesh = SubResource("CapsuleMesh_o3a6j")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="body"]
+transform = Transform3D(-0.0408434, 0, -0.550469, 0, 0.272241, 0, 0.711813, 0, -0.0315856, -0.516157, 0.400273, -0.0255547)
+mesh = SubResource("BoxMesh_5byip")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1ixf0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.999987, 0, 0.00511379, 0, 1, 0, -0.00511379, 0, 0.999987, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_wh25n")
