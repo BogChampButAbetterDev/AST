@@ -1,21 +1,24 @@
 extends CharacterBody3D
 
-var SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+var SPEED : float = 5.0
+const JUMP_VELOCITY : float = 4.5
 
-const MOUSE_SENSITIVITY = .005
+const MOUSE_SENSITIVITY : float = .005
 
-const LERP_VAL = .15
+const LERP_VAL : float = .15
 
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-@onready var body = $body
-@onready var spring_arm_pivot = $"Spring Arm Pivot"
-@onready var spring_arm = $"Spring Arm Pivot/SpringArm3D"
-@onready var sword = $Sword
+@onready var body := $body
+@onready var spring_arm_pivot := $"Spring Arm Pivot"
+@onready var spring_arm := $"Spring Arm Pivot/SpringArm3D"
+@onready var sword := $Sword
+
+var health : int = 10
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	events.damage_player.connect(take_damage)
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("ui_end"):
@@ -29,6 +32,11 @@ func _unhandled_input(event):
 	
 	if event is InputEventMouseButton:
 		events.emit_signal("slash")
+
+func _process(delta):
+	print(health)
+	if health <= 0:
+		get_tree().change_scene_to_file("res://Scenes/control.tscn")
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -56,3 +64,6 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	move_and_slide()
+
+func take_damage():
+	health -= 2

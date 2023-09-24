@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2ieucxw77j16"]
+
+[ext_resource type="Script" path="res://Scripts/healthbar.gd" id="1_3k574"]
+
+[node name="Healthbar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -281.0
+offset_top = -109.0
+offset_right = -281.0
+offset_bottom = -109.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3k574")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 0.321569, 0.164706, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_right = 302.0
+offset_bottom = 40.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 302.0
+offset_bottom = 40.0
+color = Color(0, 0.764706, 0.294118, 1)

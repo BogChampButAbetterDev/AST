@@ -20,6 +20,21 @@ albedo_color = Color(1, 0, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k0qnn"]
 
+[sub_resource type="Animation" id="Animation_eqeqc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_vfqgh"]
 resource_name = "slash"
 length = 0.8
@@ -36,21 +51,6 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 0, 1.21649), Vector3(0, 0, 1.62141), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_eqeqc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("sword pivot:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pstik"]
 _data = {
 "RESET": SubResource("Animation_eqeqc"),
@@ -61,7 +61,6 @@ _data = {
 script = ExtResource("1_ncq7q")
 
 [node name="sword pivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="sword pivot"]
 transform = Transform3D(0.771181, 0, 0, 0, 0.214282, 0, 0, 0, 0.218059, 0, 0, 0)
