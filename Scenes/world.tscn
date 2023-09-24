@@ -1,17 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://wr75r0en33tf"]
+[gd_scene load_steps=11 format=3 uid="uid://wr75r0en33tf"]
 
 [ext_resource type="Texture2D" uid="uid://deib2ys5xly3n" path="res://Textures/texture_07.png" id="1_15eoo"]
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="1_iqlxy"]
 [ext_resource type="PackedScene" uid="uid://ct1krnn3le2we" path="res://Scenes/Actor Scenes/Enemy.tscn" id="3_ot0sp"]
 [ext_resource type="AudioStream" uid="uid://d37nkofrtggtt" path="res://MusicAndSFX/SickTrack.mp3" id="4_3u553"]
-[ext_resource type="PackedScene" uid="uid://c2ieucxw77j16" path="res://Scenes/Playerhealthbar.tscn" id="5_o50xo"]
 
 [sub_resource type="GDScript" id="GDScript_dsvm7"]
 script/source = "extends Node3D
 
 func _ready():
-	$\"Idle Music\".stop() #GET RID OF THIS LINEEEEEEEEEEEEEEEEEEEEEEEEEEE
-	
+	pass
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4no8p"]
@@ -54,19 +52,9 @@ shadow_enabled = true
 [node name="Enemy" parent="." instance=ExtResource("3_ot0sp")]
 transform = Transform3D(-0.0323353, 0, -0.999477, 0, 1, 0, 0.999477, 0, -0.0323353, 0, 1.01601, 17.3581)
 
+[node name="Player" parent="." instance=ExtResource("1_iqlxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.37318, 0)
+
 [node name="Idle Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_3u553")
 autoplay = true
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Healthbar" parent="SubViewportContainer" instance=ExtResource("5_o50xo")]
-layout_mode = 2
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-size = Vector2i(1152, 648)
-
-[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_iqlxy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.37318, 0)
