@@ -11,11 +11,14 @@
 albedo_color = Color(1, 0.443137, 0.521569, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjen7"]
+radius = 0.317063
+height = 1.49779
 
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_jsx6u")
 
 [node name="body" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.630682, 0, 0, 0, 0.75199, 0, 0, 0, 0.630682, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_c2jvu")
 
 [node name="nose" type="MeshInstance3D" parent="body"]
@@ -34,6 +37,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Spring Arm Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529622, 0)
-spring_length = 3.0
+spring_length = 2.0
 
 [node name="Camera3D" type="Camera3D" parent="Spring Arm Pivot/SpringArm3D"]

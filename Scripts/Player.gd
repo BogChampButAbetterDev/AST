@@ -1,11 +1,13 @@
 extends CharacterBody3D
 
 var SPEED : float = 5.0
-const JUMP_VELOCITY : float = 4.5
+const JUMP_VELOCITY : float = 5.5
 
 const MOUSE_SENSITIVITY : float = .005
 
 const LERP_VAL : float = .15
+
+var camera_zoom_speed = 0.5
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -18,7 +20,7 @@ var health : int = 10
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	events.damage_player.connect(take_damage)
+	events.one_hit.connect(one_hit_damage)
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("ui_end"):
@@ -30,11 +32,18 @@ func _unhandled_input(event):
 		
 		spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/2, -PI/-2)
 	
-	if event is InputEventMouseButton:
+	if Input.is_action_pressed("slash"):
 		events.emit_signal("slash")
+	
+	if Input.is_action_pressed("zoom out"):
+		if spring_arm.spring_length != 5:
+			spring_arm.spring_length += camera_zoom_speed
+	
+	if Input.is_action_pressed("zoom in"):
+		if spring_arm.spring_length != 2:
+			spring_arm.spring_length -= camera_zoom_speed
 
 func _process(delta):
-	print(health)
 	if health <= 0:
 		get_tree().change_scene_to_file("res://Scenes/control.tscn")
 
@@ -67,3 +76,6 @@ func _physics_process(delta):
 
 func take_damage():
 	health -= 2
+
+func one_hit_damage():
+	health = 0

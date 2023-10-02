@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var speed = 10.0
+var speed = 100.0
 
 func _ready():
 	set_physics_process(false)
