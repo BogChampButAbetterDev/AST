@@ -1,9 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://wr75r0en33tf"]
+[gd_scene load_steps=24 format=3 uid="uid://wr75r0en33tf"]
 
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="1_iqlxy"]
 [ext_resource type="PackedScene" uid="uid://cbx23vytukexm" path="res://Scenes/dungeon.tscn" id="3_rortw"]
 [ext_resource type="AudioStream" uid="uid://d37nkofrtggtt" path="res://MusicAndSFX/SickTrack.mp3" id="4_3u553"]
 [ext_resource type="Material" uid="uid://dlqlqoo1lxqfp" path="res://Textures/underConstruction.tres" id="4_o7krr"]
+[ext_resource type="PackedScene" uid="uid://ckleyiadu5ujt" path="res://Scenes/SwordPickup.tscn" id="5_b04sp"]
+[ext_resource type="PackedScene" uid="uid://bii2de8kbkxmu" path="res://Scenes/turret.tscn" id="6_555pq"]
+[ext_resource type="PackedScene" uid="uid://dgalqu43gf47j" path="res://Scenes/healthbarsceneview.tscn" id="7_dv18o"]
+[ext_resource type="Script" path="res://Scripts/SwordSeededToOpen.gd" id="8_c4ssj"]
+[ext_resource type="Script" path="res://Scripts/Open Door.gd" id="8_nfrrw"]
 
 [sub_resource type="GDScript" id="GDScript_dsvm7"]
 script/source = "extends Node3D
@@ -11,6 +16,7 @@ script/source = "extends Node3D
 func _ready():
 	$CanvasLayer/Label2.hide()
 	$\"Idle Music\".stop()
+	events.sword_collected.connect(change_text_for_signal)
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group(\"Player\"):
@@ -20,6 +26,25 @@ func _on_area_3d_body_entered(body):
 
 func _on_suct_timer_timeout():
 	$CanvasLayer/Label2.hide()
+
+func _on_area_3d_2_body_entered(body):
+	if body.is_in_group(\"player\"):
+		events.emit_signal(\"sword_collected\")
+
+func change_text_for_signal(): #changes objective text
+	$CanvasLayer/Label.text = \"Objective: Escape the dungeon\"
+
+func change_text(text):
+	if text != $CanvasLayer/Label.text: #if the text arg is not already the actual text
+		$CanvasLayer/Label.text = text #set the text
+	else: return #stop executing function code if text is already set to text arg
+
+func _on_turret_trigger_body_entered(body):
+	events.emit_signal(\"shoot\")
+	change_text(\"Objective: Dogde the turrets\")
+
+func _on_done_with_turrets_body_entered(body):
+	change_text('Objective: Look for a way out')
 "
 
 [sub_resource type="Environment" id="Environment_12d7s"]
@@ -36,6 +61,53 @@ size = Vector3(1, 5.56463, 2.96891)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f2c3u"]
 size = Vector3(1, 5.74642, 2.95993)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nvylj"]
+
+[sub_resource type="Animation" id="Animation_cx3id"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(25.7681, 5.5075, 37.7852), Vector3(25.7681, 7.9393, 37.7852), Vector3(25.7681, 10.096, 37.7852), Vector3(25.7681, 12.2377, 37.7852), Vector3(25.7681, 13.9298, 37.7852)]
+}
+
+[sub_resource type="Animation" id="Animation_rm3r0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1mapf"]
+_data = {
+"Open": SubResource("Animation_cx3id"),
+"RESET": SubResource("Animation_rm3r0")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ejpc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r6o0f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_76e3h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j3mdj"]
+size = Vector3(4.92487, 2.91604, 0.18534)
 
 [node name="World" type="Node3D"]
 script = SubResource("GDScript_dsvm7")
@@ -56,13 +128,7 @@ autoplay = true
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 26
-text = "Controls:
-WASD to move
-Shift to sprint
-LMB to use sword
-End key to quit
-Mouse Wheel zoom camera
-Space to jump"
+text = "Objective: Find A Sword"
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 visible = false
@@ -103,5 +169,86 @@ shape = SubResource("BoxShape3D_f2c3u")
 
 [node name="suct timer" type="Timer" parent="."]
 
+[node name="Node3D" parent="." instance=ExtResource("5_b04sp")]
+transform = Transform3D(0.0273633, 0, -0.999626, 0, 1, 0, 0.999626, 0, 0.0273633, 20.1023, 3.51088, 49.9705)
+
+[node name="SubViewportContainer" parent="." instance=ExtResource("7_dv18o")]
+
+[node name="Turrets" type="Node3D" parent="."]
+
+[node name="turretTrigger" type="Area3D" parent="Turrets"]
+transform = Transform3D(10.6603, 0, 0, 0, 7.98, 0, 0, 0, 1.02337, 26.2547, 6.15627, 30.4947)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Turrets/turretTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.04366, 0, 0, -0.418821)
+shape = SubResource("BoxShape3D_nvylj")
+
+[node name="Turret" parent="Turrets" instance=ExtResource("6_555pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3195, 6.47301, 30.2871)
+
+[node name="Turret2" parent="Turrets" instance=ExtResource("6_555pq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 32.2295, 6.47301, 29.555)
+
+[node name="turretTrigger2" type="Area3D" parent="Turrets"]
+transform = Transform3D(10.6603, 0, 0, 0, 7.98, 0, 0, 0, 1.02337, 26.2547, 6.15627, 19.6936)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Turrets/turretTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 4.58779, 0, 0, -1.01934)
+shape = SubResource("BoxShape3D_nvylj")
+
+[node name="Turret3" parent="Turrets" instance=ExtResource("6_555pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3195, 6.47301, 19.486)
+
+[node name="Turret6" parent="Turrets" instance=ExtResource("6_555pq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 32.2295, 6.47301, 6.48584)
+
+[node name="Turret5" parent="Turrets" instance=ExtResource("6_555pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3195, 6.47301, 6.54455)
+
+[node name="turretTrigger3" type="Area3D" parent="Turrets"]
+transform = Transform3D(10.6603, 0, 0, 0, 7.98, 0, 0, 0, 1.02337, 26.2547, 6.15627, 8.71356)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Turrets/turretTrigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 4.58779, 0, 0, -1.01934)
+shape = SubResource("BoxShape3D_nvylj")
+
+[node name="Turret4" parent="Turrets" instance=ExtResource("6_555pq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 32.2295, 6.47301, 17.4659)
+
+[node name="Open Door" type="AnimationPlayer" parent="."]
+root_node = NodePath("../StaticBody3D")
+libraries = {
+"": SubResource("AnimationLibrary_1mapf")
+}
+script = ExtResource("8_nfrrw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(4.16032, 0, 0, 0, 8.37706, 0, 0, 0, 1, 25.768, 5.507, 37.785)
+script = ExtResource("8_c4ssj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_7ejpc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_r6o0f")
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+transform = Transform3D(0.895892, 0, 0, 0, 1, 0, 0, 0, 0.284162, 0, 0, 0.576496)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+shape = SubResource("BoxShape3D_76e3h")
+
+[node name="DoneWithTurrets" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7635, 7.01874, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoneWithTurrets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.522417, 0.469922, 2.08238)
+shape = SubResource("BoxShape3D_j3mdj")
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="suct timer" to="." method="_on_suct_timer_timeout"]
+[connection signal="body_entered" from="Turrets/turretTrigger" to="." method="_on_turret_trigger_body_entered"]
+[connection signal="body_entered" from="Turrets/turretTrigger2" to="." method="_on_turret_trigger_body_entered"]
+[connection signal="body_entered" from="Turrets/turretTrigger3" to="." method="_on_turret_trigger_body_entered"]
+[connection signal="body_entered" from="StaticBody3D/Area3D" to="StaticBody3D" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="DoneWithTurrets" to="." method="_on_done_with_turrets_body_entered"]

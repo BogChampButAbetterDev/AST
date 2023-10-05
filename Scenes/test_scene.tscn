@@ -1,0 +1,51 @@
+[gd_scene load_steps=11 format=3 uid="uid://0lo0je4mkx23"]
+
+[ext_resource type="Material" uid="uid://shtyruamt538" path="res://Textures/test_floor.tres" id="1_p6brb"]
+[ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="2_sk1qb"]
+[ext_resource type="PackedScene" uid="uid://ckleyiadu5ujt" path="res://Scenes/SwordPickup.tscn" id="3_8bm03"]
+[ext_resource type="PackedScene" uid="uid://bntmmn6j3mlpw" path="res://Scenes/Actor Scenes/Spinner.tscn" id="4_5fcf5"]
+[ext_resource type="PackedScene" uid="uid://dgalqu43gf47j" path="res://Scenes/healthbarsceneview.tscn" id="5_ld53a"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4ahby"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7wdji"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8iqwf"]
+
+[sub_resource type="Sky" id="Sky_7lynp"]
+sky_material = SubResource("ProceduralSkyMaterial_8iqwf")
+
+[sub_resource type="Environment" id="Environment_wsp1w"]
+background_mode = 2
+sky = SubResource("Sky_7lynp")
+ambient_light_source = 3
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(60, 0, 0, 0, 1, 0, 0, 0, 60, 0, 0, 0)
+material_override = ExtResource("1_p6brb")
+mesh = SubResource("BoxMesh_4ahby")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(60, 0, 0, 0, 1, 0, 0, 0, 60, 0, 0, 0)
+shape = SubResource("BoxShape3D_7wdji")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wsp1w")
+
+[node name="Player" parent="." instance=ExtResource("2_sk1qb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.181803, 2.1699, -16.8951)
+
+[node name="Node3D" parent="." instance=ExtResource("3_8bm03")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46307, 1.21607, 25.505)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.993102, 0.0677214, -0.0957193, 0.0864642, 0.128429, 0.987942, 0.0791979, -0.989404, 0.121687, 0.751201, 5.00546, 27.1035)
+
+[node name="Spinner" parent="." instance=ExtResource("4_5fcf5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5511, 1.56088, 7.15839)
+
+[node name="SubViewportContainer" parent="." instance=ExtResource("5_ld53a")]

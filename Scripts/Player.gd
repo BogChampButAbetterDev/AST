@@ -14,13 +14,17 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var body := $body
 @onready var spring_arm_pivot := $"Spring Arm Pivot"
 @onready var spring_arm := $"Spring Arm Pivot/SpringArm3D"
-@onready var sword := $Sword
+@onready var sword = $body/Sword
 
 var health : int = 10
+
+var can_use_sword = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	events.one_hit.connect(one_hit_damage)
+	events.damage_player.connect(take_damage)
+	events.sword_collected.connect(sword_collected)
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("ui_end"):
@@ -32,7 +36,7 @@ func _unhandled_input(event):
 		
 		spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/2, -PI/-2)
 	
-	if Input.is_action_pressed("slash"):
+	if Input.is_action_pressed("slash") and can_use_sword:
 		events.emit_signal("slash")
 	
 	if Input.is_action_pressed("zoom out"):
@@ -42,6 +46,9 @@ func _unhandled_input(event):
 	if Input.is_action_pressed("zoom in"):
 		if spring_arm.spring_length != 2:
 			spring_arm.spring_length -= camera_zoom_speed
+	
+	if Input.is_action_pressed("leave"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _process(delta):
 	if health <= 0:
@@ -79,3 +86,7 @@ func take_damage():
 
 func one_hit_damage():
 	health = 0
+
+func sword_collected():
+	can_use_sword = true
+	sword.show()

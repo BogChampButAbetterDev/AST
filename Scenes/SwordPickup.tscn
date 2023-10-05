@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckleyiadu5ujt"]
+
+[ext_resource type="Script" path="res://Scripts/SwordPickup.gd" id="1_ou4p8"]
+[ext_resource type="PackedScene" uid="uid://bo3kfr2umy62x" path="res://Scenes/SwordModel.tscn" id="2_6d6xl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iiau1"]
+size = Vector3(1, 2.03835, 0.4717)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ou4p8")
+
+[node name="sword pivot" parent="." instance=ExtResource("2_6d6xl")]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50654, 0)
+shape = SubResource("BoxShape3D_iiau1")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

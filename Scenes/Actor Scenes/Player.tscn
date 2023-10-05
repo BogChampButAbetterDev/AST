@@ -28,6 +28,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nrj5k")
 
 [node name="Sword" parent="body" instance=ExtResource("2_o1xol")]
 transform = Transform3D(0.0343648, 0.00228142, 0.729744, -0.0395565, 0.729484, -0.000417821, -0.728674, -0.0394928, 0.034438, 0.400594, 0, 0.449102)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fjen7")

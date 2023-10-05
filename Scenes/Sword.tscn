@@ -1,24 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdwyhl8qkconc"]
+[gd_scene load_steps=6 format=3 uid="uid://bdwyhl8qkconc"]
 
 [ext_resource type="Script" path="res://Scripts/Sword.gd" id="1_ncq7q"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_woj11"]
-albedo_color = Color(1, 1, 0.52549, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kijdk"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyjwj"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mu8yj"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="PrismMesh" id="PrismMesh_6q5by"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o7cuq"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k0qnn"]
+[ext_resource type="PackedScene" uid="uid://bo3kfr2umy62x" path="res://Scenes/SwordModel.tscn" id="2_qol1o"]
 
 [sub_resource type="Animation" id="Animation_eqeqc"]
 length = 0.001
@@ -60,48 +43,11 @@ _data = {
 [node name="StaticBody3D" type="StaticBody3D"]
 script = ExtResource("1_ncq7q")
 
-[node name="sword pivot" type="Node3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="sword pivot"]
-transform = Transform3D(0.771181, 0, 0, 0, 0.214282, 0, 0, 0, 0.218059, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_woj11")
-mesh = SubResource("BoxMesh_kijdk")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="sword pivot"]
-transform = Transform3D(0.291484, 0, 0, 0, 0.147858, 0, 0, 0, 0.218059, 0, -0.523742, 0)
-material_override = SubResource("StandardMaterial3D_woj11")
-mesh = SubResource("BoxMesh_kijdk")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="sword pivot"]
-transform = Transform3D(0.254752, 0, 0, 0, 1.15966, 0, 0, 0, 0.218059, 0, 0.671332, 0)
-mesh = SubResource("BoxMesh_kijdk")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_hyjwj")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="sword pivot"]
-transform = Transform3D(0.254752, 0, 0, 0, 0.520934, 0, 0, 0, 0.218059, 0, -0.245026, 0)
-mesh = SubResource("BoxMesh_kijdk")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_mu8yj")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="sword pivot"]
-transform = Transform3D(0.271045, 0, 0, 0, 0.291581, 0, 0, 0, 0.214227, 0.00679323, 1.37695, 0.0049336)
-mesh = SubResource("PrismMesh_6q5by")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_o7cuq")
-
-[node name="Area3D" type="Area3D" parent="sword pivot"]
-transform = Transform3D(0.377964, 0, 0, 0, 1.10271, 0, 0, 0, 0.357767, 0, 0.411267, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="sword pivot/Area3D"]
-shape = SubResource("CapsuleShape3D_k0qnn")
+[node name="sword pivot" parent="." instance=ExtResource("2_qol1o")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_pstik")
 }
 
-[connection signal="body_entered" from="sword pivot/Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

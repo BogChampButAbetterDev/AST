@@ -2605,7 +2605,7 @@ face_selected = PackedByteArray(0, 0, 1, 0, 0)
 active_face = -1
 face_ids = PackedInt32Array(0, 1, 2, 3, 4)
 
-[node name="Dungeon" type="StaticBody3D"]
+[node name="Dungeon" type="StaticBody3D" groups=["dungin"]]
 
 [node name="CyclopsBlocks" type="Node3D" parent="."]
 script = ExtResource("1_7hom7")

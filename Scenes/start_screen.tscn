@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhfhilfv6f1vd"]
+
+[ext_resource type="Script" path="res://Scripts/Start screen.gd" id="1_ia1jd"]
+
+[node name="Start screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ia1jd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -275.0
+offset_right = 275.0
+offset_bottom = 140.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.552941, 0.654902, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 100
+text = "A Short Tail"
+horizontal_alignment = 1
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 327.0
+offset_right = 691.0
+offset_bottom = 375.0
+theme_override_font_sizes/font_size = 29
+text = "Start Adventure"
+
+[node name="youtube link" type="Button" parent="."]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 383.0
+offset_right = 653.0
+offset_bottom = 414.0
+text = "A Short Tail Youtube"
+
+[node name="DemoDungeon" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 483.0
+offset_top = 331.0
+offset_right = 667.0
+offset_bottom = 374.0
+theme_override_font_sizes/font_size = 25
+text = "Intro Dungeon"
+
+[node name="TestMap" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 511.0
+offset_top = 384.0
+offset_right = 634.0
+offset_bottom = 428.0
+theme_override_font_sizes/font_size = 26
+text = "Test Map"
+
+[connection signal="button_down" from="Play" to="." method="_on_play_button_down"]
+[connection signal="button_down" from="youtube link" to="." method="_on_youtube_link_button_down"]
+[connection signal="button_down" from="DemoDungeon" to="." method="_on_demo_dungeon_button_down"]
+[connection signal="button_down" from="TestMap" to="." method="_on_test_map_button_down"]

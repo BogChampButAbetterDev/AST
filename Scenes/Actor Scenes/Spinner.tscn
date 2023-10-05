@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://bntmmn6j3mlpw"]
+
+[ext_resource type="Script" path="res://Scripts/Spinner.gd" id="1_0led7"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u1jhe"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ybtsf"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2t35u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wnc8l"]
+albedo_color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_grg5h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4dd21"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywxgf"]
+size = Vector3(0.291679, 0.0531742, 0.63305)
+
+[node name="Spinner" type="CharacterBody3D" groups=["Enemy"]]
+script = ExtResource("1_0led7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_u1jhe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ybtsf")
+
+[node name="SickFuckinEyballs" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.09613, 0, 0, 0, 0.0818759, 0, 0, 0, 1.12067, 0, 0.448649, 0)
+mesh = SubResource("CylinderMesh_2t35u")
+surface_material_override/0 = SubResource("StandardMaterial3D_wnc8l")
+
+[node name="spike" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.339003, 0, 0, 0, 4.13775e-09, -0.0929055, 0, 0.555359, 2.17986e-09, 0, 0.43672, 0.808509)
+mesh = SubResource("PrismMesh_grg5h")
+surface_material_override/0 = SubResource("StandardMaterial3D_4dd21")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0018729, 0.442597, 0.675438)
+shape = SubResource("BoxShape3D_ywxgf")
+
+[node name="attack cooldown" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="attack cooldown" to="." method="_on_attack_cooldown_timeout"]
