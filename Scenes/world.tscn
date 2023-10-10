@@ -1,28 +1,29 @@
-[gd_scene load_steps=24 format=3 uid="uid://wr75r0en33tf"]
+[gd_scene load_steps=32 format=3 uid="uid://wr75r0en33tf"]
 
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="1_iqlxy"]
+[ext_resource type="Script" path="res://Scripts/CanvasLayer.gd" id="3_or0dt"]
 [ext_resource type="PackedScene" uid="uid://cbx23vytukexm" path="res://Scenes/dungeon.tscn" id="3_rortw"]
+[ext_resource type="PackedScene" uid="uid://n3njejnyh5un" path="res://Scenes/key_counter.tscn" id="3_sc7sf"]
 [ext_resource type="AudioStream" uid="uid://d37nkofrtggtt" path="res://MusicAndSFX/SickTrack.mp3" id="4_3u553"]
-[ext_resource type="Material" uid="uid://dlqlqoo1lxqfp" path="res://Textures/underConstruction.tres" id="4_o7krr"]
 [ext_resource type="PackedScene" uid="uid://ckleyiadu5ujt" path="res://Scenes/SwordPickup.tscn" id="5_b04sp"]
 [ext_resource type="PackedScene" uid="uid://bii2de8kbkxmu" path="res://Scenes/turret.tscn" id="6_555pq"]
 [ext_resource type="PackedScene" uid="uid://dgalqu43gf47j" path="res://Scenes/healthbarsceneview.tscn" id="7_dv18o"]
 [ext_resource type="Script" path="res://Scripts/SwordSeededToOpen.gd" id="8_c4ssj"]
 [ext_resource type="Script" path="res://Scripts/Open Door.gd" id="8_nfrrw"]
+[ext_resource type="PackedScene" uid="uid://cjfe0kf53t06" path="res://Scenes/platformTwoCyl.tscn" id="10_1ifw8"]
+[ext_resource type="PackedScene" uid="uid://bntmmn6j3mlpw" path="res://Scenes/Actor Scenes/Spinner.tscn" id="11_aau4o"]
+[ext_resource type="Script" path="res://Scripts/additionalDoors.gd" id="11_tb6pw"]
+[ext_resource type="PackedScene" uid="uid://c0lr2edhw8isv" path="res://Scenes/keyDoor.tscn" id="13_kg1ao"]
+[ext_resource type="PackedScene" uid="uid://dpsodjbfolilq" path="res://Scenes/apple.tscn" id="13_moxba"]
+[ext_resource type="PackedScene" uid="uid://d10ya3a8s2v64" path="res://Scenes/KeyPickup.tscn" id="14_oyg6o"]
 
 [sub_resource type="GDScript" id="GDScript_dsvm7"]
 script/source = "extends Node3D
 
 func _ready():
-	$CanvasLayer/Label2.hide()
 	$\"Idle Music\".stop()
+	$additionalDoors/DoorAnimation.play(\"RESET\")
 	events.sword_collected.connect(change_text_for_signal)
-
-func _on_area_3d_body_entered(body):
-	if body.is_in_group(\"Player\"):
-		$CanvasLayer/Label2.show()
-		$\"suct timer\".start()
-		events.emit_signal(\"suct\")
 
 func _on_suct_timer_timeout():
 	$CanvasLayer/Label2.hide()
@@ -50,17 +51,6 @@ func _on_done_with_turrets_body_entered(body):
 [sub_resource type="Environment" id="Environment_12d7s"]
 background_mode = 1
 background_color = Color(0, 0.709804, 0.388235, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_1nvfm"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_opxlk"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3u6pc"]
-size = Vector3(1, 5.56463, 2.96891)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_f2c3u"]
-size = Vector3(1, 5.74642, 2.95993)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nvylj"]
 
@@ -109,6 +99,47 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3mdj"]
 size = Vector3(4.92487, 2.91604, 0.18534)
 
+[sub_resource type="BoxMesh" id="BoxMesh_geykt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ww282"]
+
+[sub_resource type="Animation" id="Animation_pwcrf"]
+resource_name = "KeyDoorOpen"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyRoomKeyDoor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(39.7695, 8.50181, 20.9802), Vector3(39.7695, 10.0226, 20.9802), Vector3(39.7695, 11.6432, 20.9802)]
+}
+
+[sub_resource type="Animation" id="Animation_qdr88"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyRoomKeyDoor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(39.7695, 8.49747, 20.9802)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fqul8"]
+_data = {
+"KeyDoorOpen": SubResource("Animation_pwcrf"),
+"RESET": SubResource("Animation_qdr88")
+}
+
 [node name="World" type="Node3D"]
 script = SubResource("GDScript_dsvm7")
 
@@ -116,13 +147,14 @@ script = SubResource("GDScript_dsvm7")
 environment = SubResource("Environment_12d7s")
 
 [node name="Player" parent="." instance=ExtResource("1_iqlxy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.37318, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284918, 3.09939, -1.23104)
 
 [node name="Idle Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_3u553")
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_or0dt")
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 offset_right = 40.0
@@ -140,7 +172,9 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.992157, 0.992157, 0.992157, 1)
 theme_override_font_sizes/font_size = 36
-text = "That area is unfinished"
+text = "You need a key to go in there"
+
+[node name="KeyCounter" parent="CanvasLayer" instance=ExtResource("3_sc7sf")]
 
 [node name="Dungeon" parent="." instance=ExtResource("3_rortw")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.23302, 0, 5.47632)
@@ -148,28 +182,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.233
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.825206, -0.520515, 0.219317, -0.563765, -0.782878, 0.263193, 0.0347029, -0.340832, -0.939484, 0, 4.62976, 5.83581)
 
-[node name="secret room block" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0639248)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="secret room block"]
-transform = Transform3D(1, 0, 0, 0, 5.77063, 0, 0, 0, 2.18034, 20.2643, 6.51078, -2.46753)
-material_override = ExtResource("4_o7krr")
-mesh = SubResource("BoxMesh_1nvfm")
-surface_material_override/0 = SubResource("StandardMaterial3D_opxlk")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="secret room block"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3328, 6.51068, -2.98913)
-shape = SubResource("BoxShape3D_3u6pc")
-
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3819, 6.3248, -2.96809)
-shape = SubResource("BoxShape3D_f2c3u")
-
-[node name="suct timer" type="Timer" parent="."]
-
-[node name="Node3D" parent="." instance=ExtResource("5_b04sp")]
+[node name="SwordPickup" parent="." instance=ExtResource("5_b04sp")]
 transform = Transform3D(0.0273633, 0, -0.999626, 0, 1, 0, 0.999626, 0, 0.0273633, 20.1023, 3.51088, 49.9705)
 
 [node name="SubViewportContainer" parent="." instance=ExtResource("7_dv18o")]
@@ -216,26 +229,26 @@ shape = SubResource("BoxShape3D_nvylj")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 32.2295, 6.47301, 17.4659)
 
 [node name="Open Door" type="AnimationPlayer" parent="."]
-root_node = NodePath("../StaticBody3D")
+root_node = NodePath("../NeedSwordDoor")
 libraries = {
 "": SubResource("AnimationLibrary_1mapf")
 }
 script = ExtResource("8_nfrrw")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="NeedSwordDoor" type="StaticBody3D" parent="."]
 transform = Transform3D(4.16032, 0, 0, 0, 8.37706, 0, 0, 0, 1, 25.768, 5.507, 37.785)
 script = ExtResource("8_c4ssj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NeedSwordDoor"]
 mesh = SubResource("BoxMesh_7ejpc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NeedSwordDoor"]
 shape = SubResource("BoxShape3D_r6o0f")
 
-[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+[node name="Area3D" type="Area3D" parent="NeedSwordDoor"]
 transform = Transform3D(0.895892, 0, 0, 0, 1, 0, 0, 0, 0.284162, 0, 0, 0.576496)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NeedSwordDoor/Area3D"]
 shape = SubResource("BoxShape3D_76e3h")
 
 [node name="DoneWithTurrets" type="Area3D" parent="."]
@@ -245,10 +258,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7635, 7.01874, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.522417, 0.469922, 2.08238)
 shape = SubResource("BoxShape3D_j3mdj")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
-[connection signal="timeout" from="suct timer" to="." method="_on_suct_timer_timeout"]
+[node name="Node3D2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.3831, 1.92652, -9.40324)
+
+[node name="Platform" parent="Node3D2" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.527769, 0, 2.74461)
+
+[node name="additionalDoors" type="Node3D" parent="."]
+script = ExtResource("11_tb6pw")
+
+[node name="EnemyRoomKeyDoor" type="StaticBody3D" parent="additionalDoors"]
+transform = Transform3D(1.96641, 0, 0, 0, 3.03833, 0, 0, 0, 1, 39.7695, 8.49747, 20.9802)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="additionalDoors/EnemyRoomKeyDoor"]
+mesh = SubResource("BoxMesh_geykt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="additionalDoors/EnemyRoomKeyDoor"]
+shape = SubResource("BoxShape3D_ww282")
+
+[node name="DoorAnimation" type="AnimationPlayer" parent="additionalDoors"]
+libraries = {
+"": SubResource("AnimationLibrary_fqul8")
+}
+
+[node name="keyDoor" parent="additionalDoors" instance=ExtResource("13_kg1ao")]
+transform = Transform3D(0.00971763, 0, 0.71838, 0, 0.718445, 0, -0.71838, 0, 0.00971763, 20.0485, 7.41001, -2.52914)
+
+[node name="Spinner" parent="." instance=ExtResource("11_aau4o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.0223, 6.93399, 14.3013)
+
+[node name="heals" type="Node3D" parent="."]
+
+[node name="Apple" parent="heals" instance=ExtResource("13_moxba")]
+transform = Transform3D(4.75769, 0, 0, 0, 4.75769, 0, 0, 0, 4.75769, 48, 8, 27)
+
+[node name="Apple2" parent="heals" instance=ExtResource("13_moxba")]
+transform = Transform3D(4.75769, 0, 0, 0, 4.75769, 0, 0, 0, 4.75769, 47.9736, 8, 25.5374)
+
+[node name="Apple3" parent="heals" instance=ExtResource("13_moxba")]
+transform = Transform3D(4.75769, 0, 0, 0, 4.75769, 0, 0, 0, 4.75769, 47.9736, 8, 28.4324)
+
+[node name="pickups" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.8326, 7.72902, 32.7557)
+
+[node name="KeyPickup" parent="pickups" instance=ExtResource("14_oyg6o")]
+
 [connection signal="body_entered" from="Turrets/turretTrigger" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="Turrets/turretTrigger2" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="Turrets/turretTrigger3" to="." method="_on_turret_trigger_body_entered"]
-[connection signal="body_entered" from="StaticBody3D/Area3D" to="StaticBody3D" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="NeedSwordDoor/Area3D" to="NeedSwordDoor" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="DoneWithTurrets" to="." method="_on_done_with_turrets_body_entered"]

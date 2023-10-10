@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bntmmn6j3mlpw"]
+[gd_scene load_steps=10 format=3 uid="uid://bntmmn6j3mlpw"]
 
 [ext_resource type="Script" path="res://Scripts/Spinner.gd" id="1_0led7"]
 
@@ -21,6 +21,9 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ywxgf"]
 size = Vector3(0.291679, 0.0531742, 0.63305)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qed38"]
+size = Vector3(3.00984, 1, 3.04707)
+
 [node name="Spinner" type="CharacterBody3D" groups=["Enemy"]]
 script = ExtResource("1_0led7")
 
@@ -40,13 +43,20 @@ transform = Transform3D(0.339003, 0, 0, 0, 4.13775e-09, -0.0929055, 0, 0.555359,
 mesh = SubResource("PrismMesh_grg5h")
 surface_material_override/0 = SubResource("StandardMaterial3D_4dd21")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Damage_player" type="Area3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Damage_player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0018729, 0.442597, 0.675438)
 shape = SubResource("BoxShape3D_ywxgf")
 
 [node name="attack cooldown" type="Timer" parent="."]
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[node name="AttackTrigger" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.149767)
+shape = SubResource("BoxShape3D_qed38")
+
+[connection signal="body_entered" from="Damage_player" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="attack cooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="body_entered" from="AttackTrigger" to="." method="_on_attack_trigger_body_entered"]

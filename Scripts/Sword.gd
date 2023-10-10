@@ -1,14 +1,13 @@
 extends StaticBody3D
 
-var valid_damage = false
-
 func _ready():
 	events.slash.connect(sword_slashed)
+	$CollisionShape3D.disabled = true #player can't sprint if enabled
 
 func sword_slashed():
+	$CollisionShape3D.disabled = false #only re-enable if player attacks
 	$AnimationPlayer.play("slash")
-	valid_damage = true
 
-func _on_area_3d_body_entered(body):
-	if body.is_in_group("Enemy") and valid_damage:
-		events.emit_signal("enemy_damaged")
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == 'slash':
+		$CollisionShape3D.disabled = true

@@ -1,10 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://0lo0je4mkx23"]
+[gd_scene load_steps=15 format=3 uid="uid://0lo0je4mkx23"]
 
 [ext_resource type="Material" uid="uid://shtyruamt538" path="res://Textures/test_floor.tres" id="1_p6brb"]
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="2_sk1qb"]
 [ext_resource type="PackedScene" uid="uid://ckleyiadu5ujt" path="res://Scenes/SwordPickup.tscn" id="3_8bm03"]
 [ext_resource type="PackedScene" uid="uid://bntmmn6j3mlpw" path="res://Scenes/Actor Scenes/Spinner.tscn" id="4_5fcf5"]
 [ext_resource type="PackedScene" uid="uid://dgalqu43gf47j" path="res://Scenes/healthbarsceneview.tscn" id="5_ld53a"]
+[ext_resource type="PackedScene" uid="uid://dpsodjbfolilq" path="res://Scenes/apple.tscn" id="6_7npyl"]
+[ext_resource type="PackedScene" uid="uid://d10ya3a8s2v64" path="res://Scenes/KeyPickup.tscn" id="7_i5bbn"]
+[ext_resource type="PackedScene" uid="uid://n3njejnyh5un" path="res://Scenes/key_counter.tscn" id="8_u1o25"]
+[ext_resource type="PackedScene" uid="uid://c0lr2edhw8isv" path="res://Scenes/keyDoor.tscn" id="9_pi40v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4ahby"]
 
@@ -49,3 +53,14 @@ transform = Transform3D(0.993102, 0.0677214, -0.0957193, 0.0864642, 0.128429, 0.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5511, 1.56088, 7.15839)
 
 [node name="SubViewportContainer" parent="." instance=ExtResource("5_ld53a")]
+
+[node name="Apple" parent="." instance=ExtResource("6_7npyl")]
+transform = Transform3D(5.4, 0, 0, 0, 5.4, 0, 0, 0, 5.4, -12, 1, -3)
+
+[node name="KeyPickup" parent="." instance=ExtResource("7_i5bbn")]
+transform = Transform3D(0.38199, 0, 0, 0, 1, 0, 0, 0, 0.355489, -10.4706, 1.82925, -10.1233)
+
+[node name="KeyCounter" parent="." instance=ExtResource("8_u1o25")]
+
+[node name="keyDoor" parent="." instance=ExtResource("9_pi40v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.984, 2.87286, -1.83511)

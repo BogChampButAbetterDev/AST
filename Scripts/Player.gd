@@ -22,7 +22,7 @@ var can_use_sword = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	events.one_hit.connect(one_hit_damage)
+	#events.one_hit.connect(one_hit_damage)
 	events.damage_player.connect(take_damage)
 	events.sword_collected.connect(sword_collected)
 
@@ -84,8 +84,8 @@ func _physics_process(delta):
 func take_damage():
 	health -= 2
 
-func one_hit_damage():
-	health = 0
+#func one_hit_damage():
+	#health = 0
 
 func sword_collected():
 	can_use_sword = true

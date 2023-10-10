@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d10ya3a8s2v64"]
+
+[ext_resource type="Script" path="res://Scripts/KeyPickup.gd" id="1_rfdht"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nx8e2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8s42"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wh35o"]
+size = Vector3(1.26354, 1, 1.28465)
+
+[node name="KeyPickup" type="StaticBody3D"]
+transform = Transform3D(0.38199, 0, 0, 0, 1, 0, 0, 0, 0.355489, 0, 0, 0)
+script = ExtResource("1_rfdht")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_nx8e2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_u8s42")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_wh35o")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

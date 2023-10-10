@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdwyhl8qkconc"]
+[gd_scene load_steps=7 format=3 uid="uid://bdwyhl8qkconc"]
 
 [ext_resource type="Script" path="res://Scripts/Sword.gd" id="1_ncq7q"]
 [ext_resource type="PackedScene" uid="uid://bo3kfr2umy62x" path="res://Scenes/SwordModel.tscn" id="2_qol1o"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bgl3a"]
+size = Vector3(0.210891, 1.46173, 0.217857)
 
 [sub_resource type="Animation" id="Animation_eqeqc"]
 length = 0.001
@@ -40,8 +43,13 @@ _data = {
 "slash": SubResource("Animation_vfqgh")
 }
 
-[node name="StaticBody3D" type="StaticBody3D"]
+[node name="StaticBody3D" type="StaticBody3D" groups=["swrd"]]
 script = ExtResource("1_ncq7q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.273955, 0, 0, 0, 0.925381, 0, 0, 0, 0.7653, 0, 0.792121, 0)
+shape = SubResource("BoxShape3D_bgl3a")
+disabled = true
 
 [node name="sword pivot" parent="." instance=ExtResource("2_qol1o")]
 

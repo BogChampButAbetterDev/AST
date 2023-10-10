@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjfe0kf53t06"]
+
+[ext_resource type="Material" uid="uid://shtyruamt538" path="res://Textures/test_floor.tres" id="1_ryhtl"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ayjvf"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_28w37"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_h5s8b"]
+
+[node name="Platform" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1.96017, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("1_ryhtl")
+mesh = SubResource("CylinderMesh_ayjvf")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(2.96215, 0, 0, 0, 0.303632, 0, 0, 0, 2.96215, 0, 2.14414, 0)
+material_override = ExtResource("1_ryhtl")
+mesh = SubResource("CylinderMesh_28w37")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(2.86739, 0, 0, 0, 0.262333, 0, 0, 0, 2.94426, 0, 2.20174, 0)
+shape = SubResource("CylinderShape3D_h5s8b")

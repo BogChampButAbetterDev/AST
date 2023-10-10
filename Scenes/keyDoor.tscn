@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0lr2edhw8isv"]
+
+[ext_resource type="Script" path="res://Scripts/keyDoor.gd" id="1_omxh4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kfywy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3kbef"]
+size = Vector3(3.01308, 4.00063, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ag2k"]
+size = Vector3(2.94118, 3.72613, 1)
+
+[node name="keyDoor" type="StaticBody3D"]
+script = ExtResource("1_omxh4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_kfywy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3kbef")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125457, 0.199236)
+shape = SubResource("BoxShape3D_3ag2k")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

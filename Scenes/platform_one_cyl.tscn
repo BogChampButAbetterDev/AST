@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvr1akulpfp3j"]
+
+[ext_resource type="Material" uid="uid://shtyruamt538" path="res://Textures/test_floor.tres" id="1_uxw6n"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fg80j"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6hijg"]
+
+[node name="PlatformOneCyl" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1.95985, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("1_uxw6n")
+mesh = SubResource("CylinderMesh_fg80j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.513511, 0, 0, 0, 1, 0, 1.44307, 0)
+shape = SubResource("CylinderShape3D_6hijg")

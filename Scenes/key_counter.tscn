@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://n3njejnyh5un"]
+
+[ext_resource type="Script" path="res://Scripts/key_counter.gd" id="1_byymi"]
+
+[node name="KeyCounter" type="CanvasLayer"]
+script = ExtResource("1_byymi")
+
+[node name="keyCounter" type="Label" parent="."]
+offset_left = 831.0
+offset_top = 30.0
+offset_right = 936.0
+offset_bottom = 86.0
+theme_override_font_sizes/font_size = 38
