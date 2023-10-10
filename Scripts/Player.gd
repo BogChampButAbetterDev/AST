@@ -18,7 +18,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var health : int = 10
 
-var can_use_sword = false
+var can_use_sword : bool = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

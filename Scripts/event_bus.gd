@@ -1,6 +1,7 @@
 extends Node
 
 signal slash #only used to play the slash animation
+signal valid_damage #used to check if sword hit enemy
 signal enemy_damaged
 signal enemy_attacked
 signal damage_player

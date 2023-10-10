@@ -1,5 +1,7 @@
 extends StaticBody3D
 
+#THIS SCRIPT ONLY MANAGES SWORD ANIMATIONS
+
 func _ready():
 	events.slash.connect(sword_slashed)
 	$CollisionShape3D.disabled = true #player can't sprint if enabled

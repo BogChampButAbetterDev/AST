@@ -10,12 +10,12 @@ const LERP_VAL = .15
 
 func _ready():
 	set_physics_process(false)
-	events.slash.connect(damage)
+	events.valid_damage.connect(damage)
 
 func _physics_process(delta):
 	rotate_y(90)
 	
-	if target == null: 
+	if target == null:
 		get_tree().get_nodes_in_group("Player")[0]
 	
 	if target != null: 
