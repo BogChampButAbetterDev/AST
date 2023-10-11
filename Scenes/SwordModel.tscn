@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bo3kfr2umy62x"]
 
-[ext_resource type="Script" path="res://Scenes/SwordModel.gd" id="1_8p3vm"]
+[ext_resource type="Script" path="res://Scripts/SwordModel.gd" id="1_ceqf5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_woj11"]
 albedo_color = Color(1, 1, 0.52549, 1)
@@ -22,7 +22,7 @@ albedo_color = Color(1, 0, 1, 1)
 size = Vector3(0.474197, 1.43544, 0.42134)
 
 [node name="sword pivot" type="Node3D"]
-script = ExtResource("1_8p3vm")
+script = ExtResource("1_ceqf5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.771181, 0, 0, 0, 0.214282, 0, 0, 0, 0.218059, 0, 0, 0)

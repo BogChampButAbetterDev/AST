@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://wr75r0en33tf"]
+[gd_scene load_steps=33 format=3 uid="uid://wr75r0en33tf"]
 
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="1_iqlxy"]
 [ext_resource type="Script" path="res://Scripts/CanvasLayer.gd" id="3_or0dt"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/Open Door.gd" id="8_nfrrw"]
 [ext_resource type="PackedScene" uid="uid://cjfe0kf53t06" path="res://Scenes/platformTwoCyl.tscn" id="10_1ifw8"]
 [ext_resource type="PackedScene" uid="uid://bntmmn6j3mlpw" path="res://Scenes/Actor Scenes/Spinner.tscn" id="11_aau4o"]
+[ext_resource type="PackedScene" uid="uid://cvr1akulpfp3j" path="res://Scenes/platform_one_cyl.tscn" id="11_i5htf"]
 [ext_resource type="Script" path="res://Scripts/additionalDoors.gd" id="11_tb6pw"]
 [ext_resource type="PackedScene" uid="uid://c0lr2edhw8isv" path="res://Scenes/keyDoor.tscn" id="13_kg1ao"]
 [ext_resource type="PackedScene" uid="uid://dpsodjbfolilq" path="res://Scenes/apple.tscn" id="13_moxba"]
@@ -147,7 +148,7 @@ script = SubResource("GDScript_dsvm7")
 environment = SubResource("Environment_12d7s")
 
 [node name="Player" parent="." instance=ExtResource("1_iqlxy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284918, 3.09939, -1.23104)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508666, 7.27683, -0.00485456)
 
 [node name="Idle Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_3u553")
@@ -258,11 +259,68 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7635, 7.01874, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.522417, 0.469922, 2.08238)
 shape = SubResource("BoxShape3D_j3mdj")
 
-[node name="Node3D2" type="Node3D" parent="."]
+[node name="Parkour platforms" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.3831, 1.92652, -9.40324)
 
-[node name="Platform" parent="Node3D2" instance=ExtResource("10_1ifw8")]
+[node name="PlatformOneCyl4" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0928, 0.849662, -1.38493)
+
+[node name="Platform" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.527769, 0, 2.74461)
+
+[node name="Platform3" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9692, 0.0276175, -1.7621)
+
+[node name="PlatformOneCyl2" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61589, 0.452535, -1.54384)
+
+[node name="PlatformOneCyl3" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36339, 0.849662, -1.38493)
+
+[node name="PlatformOneCyl" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.503675, 0.159064, -1.89708)
+
+[node name="Platform2" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.27556, 0.00796878, 2.48443)
+
+[node name="Platform4" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.25105, 1.30809, -1.51892)
+
+[node name="PlatformOneCyl5" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.22222, 2.64353, -4.82353)
+
+[node name="PlatformOneCyl6" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4121, 2.64353, -4.82353)
+
+[node name="PlatformOneCyl7" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4121, 2.64353, -6.97736)
+
+[node name="Platform5" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53519, -0.163555, -12.3733)
+
+[node name="PlatformOneCyl8" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.69523, 2.64353, -8.53794)
+
+[node name="PlatformOneCyl9" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.69523, 1.22308, -15.697)
+
+[node name="PlatformOneCyl10" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.20237, 1.22308, -16.7522)
+
+[node name="PlatformOneCyl11" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.48411, 1.22308, -18.7722)
+
+[node name="PlatformOneCyl12" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60035, 1.22308, -20.0723)
+
+[node name="Platform6" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.713, 0, -25.3736)
+
+[node name="PlatformOneCyl13" parent="Parkour platforms" instance=ExtResource("11_i5htf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60035, 1.22308, -21.6709)
+
+[node name="Platform7" parent="Parkour platforms" instance=ExtResource("10_1ifw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62033, 0.607675, -25.5113)
 
 [node name="additionalDoors" type="Node3D" parent="."]
 script = ExtResource("11_tb6pw")

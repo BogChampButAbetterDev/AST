@@ -39,7 +39,8 @@ func _on_attack_cooldown_timeout():
 	set_physics_process(true)
 
 func damage():
-	health -= 2
+	print('damage')
+	health -= 5
 	$"attack cooldown".start()
 
 func _on_attack_trigger_body_entered(body):
