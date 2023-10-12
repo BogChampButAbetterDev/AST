@@ -16,3 +16,4 @@ signal collected_apple
 signal picked_up_key
 signal update_key_counter
 signal show_key_needed_text
+signal respawn #respawns after player falls into lava

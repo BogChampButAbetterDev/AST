@@ -90,3 +90,9 @@ func take_damage():
 func sword_collected():
 	can_use_sword = true
 	sword.show()
+
+func _on_lavahitbox_body_entered(body): #area in world scene
+	if body.is_in_group("Player"):
+		take_damage()
+		events.update_healthbar.emit()
+		events.emit_signal("respawn")

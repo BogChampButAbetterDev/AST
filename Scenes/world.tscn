@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://wr75r0en33tf"]
+[gd_scene load_steps=37 format=3 uid="uid://wr75r0en33tf"]
 
 [ext_resource type="PackedScene" uid="uid://bopgh5r2ukh5q" path="res://Scenes/Actor Scenes/Player.tscn" id="1_iqlxy"]
 [ext_resource type="Script" path="res://Scripts/CanvasLayer.gd" id="3_or0dt"]
@@ -25,6 +25,7 @@ func _ready():
 	$\"Idle Music\".stop()
 	$additionalDoors/DoorAnimation.play(\"RESET\")
 	events.sword_collected.connect(change_text_for_signal)
+	events.respawn.connect(player_lava_event)
 
 func _on_suct_timer_timeout():
 	$CanvasLayer/Label2.hide()
@@ -47,11 +48,32 @@ func _on_turret_trigger_body_entered(body):
 
 func _on_done_with_turrets_body_entered(body):
 	change_text('Objective: Look for a way out')
+
+func player_lava_event(): #resets player's pos after they fall into the lava
+	$Player.transform.origin = Vector3(13.511, 6.681, -2.91)
 "
 
 [sub_resource type="Environment" id="Environment_12d7s"]
 background_mode = 1
-background_color = Color(0, 0.709804, 0.388235, 1)
+background_color = Color(0, 0.701961, 0.482353, 1)
+reflected_light_source = 2
+tonemap_mode = 1
+ssao_power = 1.02453
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.65
+glow_strength = 1.06
+glow_bloom = 0.19
+glow_blend_mode = 4
+glow_hdr_threshold = 2.73
+glow_hdr_scale = 3.98
+glow_hdr_luminance_cap = 256.0
+glow_map_strength = 1.0
+volumetric_fog_albedo = Color(1, 0.647059, 1, 1)
+volumetric_fog_emission_energy = 0.0
+adjustment_brightness = 2.27
+adjustment_contrast = 1.32
+adjustment_saturation = 1.47
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nvylj"]
 
@@ -141,6 +163,17 @@ _data = {
 "RESET": SubResource("Animation_qdr88")
 }
 
+[sub_resource type="BoxMesh" id="BoxMesh_3o3p8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lkjkk"]
+albedo_color = Color(2, 1.13725, 0.227451, 1)
+metallic = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lg7pd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lmnh2"]
+size = Vector3(28.1626, 1, 33.6303)
+
 [node name="World" type="Node3D"]
 script = SubResource("GDScript_dsvm7")
 
@@ -148,7 +181,7 @@ script = SubResource("GDScript_dsvm7")
 environment = SubResource("Environment_12d7s")
 
 [node name="Player" parent="." instance=ExtResource("1_iqlxy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508666, 7.27683, -0.00485456)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.128161, 6.68114, -1.09481)
 
 [node name="Idle Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_3u553")
@@ -361,8 +394,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.8326, 7.72902, 32.7557)
 
 [node name="KeyPickup" parent="pickups" instance=ExtResource("14_oyg6o")]
 
+[node name="Lava" type="Node3D" parent="."]
+transform = Transform3D(1.27335, 0, 0, 0, 1.27335, 0, 0, 0, 1.27335, 11.9857, 1.66359, -7.12975)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Lava"]
+transform = Transform3D(25.0397, 0, 0, 0, 1, 0, 0, 0, 35.4815, 7.98252, -1.13557, -14.8811)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Lava/StaticBody3D"]
+mesh = SubResource("BoxMesh_3o3p8")
+surface_material_override/0 = SubResource("StandardMaterial3D_lkjkk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Lava/StaticBody3D"]
+shape = SubResource("BoxShape3D_lg7pd")
+
+[node name="Lavahitbox" type="Area3D" parent="Lava"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Lava/Lavahitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.08385, -0.286308, -14.5419)
+shape = SubResource("BoxShape3D_lmnh2")
+
 [connection signal="body_entered" from="Turrets/turretTrigger" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="Turrets/turretTrigger2" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="Turrets/turretTrigger3" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="NeedSwordDoor/Area3D" to="NeedSwordDoor" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="DoneWithTurrets" to="." method="_on_done_with_turrets_body_entered"]
+[connection signal="body_entered" from="Lava/Lavahitbox" to="Player" method="_on_lavahitbox_body_entered"]
