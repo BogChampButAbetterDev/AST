@@ -210,6 +210,9 @@ text = "You need a key to go in there"
 
 [node name="KeyCounter" parent="CanvasLayer" instance=ExtResource("3_sc7sf")]
 
+[node name="lab2timer" type="Timer" parent="CanvasLayer"]
+wait_time = 0.5
+
 [node name="Dungeon" parent="." instance=ExtResource("3_rortw")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.23302, 0, 5.47632)
 
@@ -270,7 +273,7 @@ libraries = {
 script = ExtResource("8_nfrrw")
 
 [node name="NeedSwordDoor" type="StaticBody3D" parent="."]
-transform = Transform3D(4.16032, 0, 0, 0, 8.37706, 0, 0, 0, 1, 25.768, 5.507, 37.785)
+transform = Transform3D(4.16032, 0, 0, 0, 8.37706, 0, 0, 0, 1, 25.7681, 5.5075, 37.7852)
 script = ExtResource("8_c4ssj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NeedSwordDoor"]
@@ -413,6 +416,7 @@ shape = SubResource("BoxShape3D_lg7pd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.08385, -0.286308, -14.5419)
 shape = SubResource("BoxShape3D_lmnh2")
 
+[connection signal="timeout" from="CanvasLayer/lab2timer" to="CanvasLayer" method="_on_lab_2_timer_timeout"]
 [connection signal="body_entered" from="Turrets/turretTrigger" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="Turrets/turretTrigger2" to="." method="_on_turret_trigger_body_entered"]
 [connection signal="body_entered" from="Turrets/turretTrigger3" to="." method="_on_turret_trigger_body_entered"]

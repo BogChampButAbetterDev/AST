@@ -31,4 +31,4 @@ func _on_area_3d_body_entered(body):
 			true:
 				open()
 			false:
-				print('balls')
+				events.emit_signal("show_key_needed_text")
