@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var SPEED : float = 5.0
+var SPEED : float = 10.0
 const JUMP_VELOCITY : float = 5.5
 
 const MOUSE_SENSITIVITY : float = .005
@@ -71,9 +71,9 @@ func _physics_process(delta):
 		
 		body.rotation.y = lerp_angle(body.rotation.y, atan2(velocity.x, velocity.z), LERP_VAL)
 		if Input.is_action_pressed("sprint"):
-			SPEED = 10.0
+			SPEED = 15.0
 		else:
-			SPEED = 5.0
+			SPEED = 10.0
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
