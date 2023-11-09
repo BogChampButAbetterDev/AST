@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctoq7yd1gtext"]
+
+[ext_resource type="PackedScene" uid="uid://3otkvkn6oejr" path="res://3DModels/TreeHouseEX.blend" id="1_5t6im"]
+[ext_resource type="Texture2D" uid="uid://cdeg8r5urcmvo" path="res://Textures/Color Pallette.PNG" id="2_vo7lp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw54o"]
+albedo_texture = ExtResource("2_vo7lp")
+
+[node name="TreeHouseEX" instance=ExtResource("1_5t6im")]
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_mw54o")
